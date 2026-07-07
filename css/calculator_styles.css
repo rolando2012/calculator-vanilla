@@ -1,3 +1,7 @@
+body{
+    background-color: black
+}
+
 .calculator_container{
     margin: 8rem auto;
     width: 333px;
@@ -16,15 +20,36 @@
 
 .calculator_screen {
     margin: 1.5rem 1rem 1rem 1rem;
-    height: 60px;
+    height: 85px;
     background-color: #d1dcce;
     font-family: 'Courier New';
     font-size: 1.5rem;
-    padding: 0.5rem;
     box-sizing: border-box;
     border-radius: 5px;
     border: 2px solid #1a1a1a; 
     box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.6); 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-start;
+}
+
+.calculator_operations{
+    margin: 1px;
+    padding: 1px;
+    word-break: break-all;
+    text-align: left;
+    height:60px;
+    line-height:25px;
+    overflow: hidden;
+}
+
+.calculator_result{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    position: absoulute;
+    font-weight: bold;
+    height: 25px;
 }
 
 .calculator_buttons{
