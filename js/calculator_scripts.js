@@ -9,40 +9,70 @@ for(let btn of btns){
 window.addEventListener('keydown',show_Keyboard);
 
 function show(e){
+    e.target.blur();
+
     let value = e.target.textContent;
     let current_text = screen.textContent;
-    
-    if(value === 'DEL'){
-        screen.textContent = screen.textContent.slice(0, -1);
-        result_screen.textContent = '';
-    }else if(value === 'AC'){
-        screen.textContent = ''; 
-        result_screen.textContent = '';
-    }else if(current_text.length<40){
-        if (value === '÷') {
-            screen.textContent += '/';
-        } else if (value === '=') {
+
+    switch(value){
+        case 'DEL':
+            screen.textContent = current_text.slice(0, -1);
+            result_screen.textContent = '0';
+            break;
+
+        case 'AC':
+            screen.textContent = '';
+            result_screen.textContent = '0';
+            break;
+
+        case '=':
             execute_calculation();
-        } else {
-            screen.textContent += value;
-        }
+            break;
+
+        case '÷':
+            if(current_text.length < 40){
+                result_screen.textContent = '';
+                screen.textContent += '/';
+            }
+            break;
+
+        default:
+            if(current_text.length < 40){
+                result_screen.textContent = '';
+                screen.textContent += value;
+            }
     }
 }
 
 function show_Keyboard(e){
     let current_text = screen.textContent;
 
-    if (e.key === 'Backspace') {
-        screen.textContent = current_text.slice(0, -1);
-        result_screen.textContent = '';
-    }else if (e.key === 'Enter' || e.key === '=') {
-        execute_calculation();
-    }else if((current_text.length<40)){
-        if(e.key === '*'){
-            screen.textContent += '×';
-        }else if (/^[0-9+\-/.()]$/.test(e.key)) {
-            screen.textContent += e.key;
-        }
+    switch(e.key){
+        case 'Backspace':
+            screen.textContent = current_text.slice(0, -1);
+            result_screen.textContent = '0';
+            break;
+
+        case 'Enter':
+        case '=':
+            execute_calculation();
+            break;
+
+        case '*':
+            if(current_text.length < 40){
+                result_screen.textContent = '';
+                screen.textContent += '×';
+            }
+            break;
+
+        default:
+            if(
+                current_text.length < 40 &&
+                /^[0-9+\-/.()]$/.test(e.key)
+            ){
+                result_screen.textContent = '';
+                screen.textContent += e.key;
+            }
     }
 }
 
@@ -65,11 +95,23 @@ function execute_calculation(){
         if (!isFinite(result)){
             result_screen.textContent = 'Math Error';
         }else{
-            result_screen.textContent = result;
+            let result_str = String(result);
+            if(result_str.length > 20){
+                result_str = result.toExponential(8);
+            }
+            result_screen.textContent = result_str;
+            show_history(current_text, result_str);
         }
     }catch(error){
         result_screen.textContent = 'Syntax Error';
         console.error(error);
     }
+}
 
+function show_history(operations, result){
+    let item = document.createElement('li');
+    let operation_spacing = operations.replace(/([+\-/×÷])/g, ' $1 ');
+    let text = document.createTextNode(operation_spacing + ' = ' + result);
+    item.appendChild(text);
+    document.getElementById('history').appendChild(item);
 }

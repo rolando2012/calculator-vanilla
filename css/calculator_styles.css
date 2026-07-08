@@ -1,12 +1,21 @@
-body{
-    background-color: black
+body {
+    background-color: black;
+    display: flex;
+    flex-direction: row;       
+    justify-content: center;  
+    align-items: center;      
+    min-height: 100vh;      
+    margin: 0;
+    gap: 2rem;
+    flex-wrap: wrap;          
 }
 
-.calculator_container{
-    margin: 8rem auto;
-    width: 333px;
+.calculator_container {
+    width: 100%;
+    max-width: 333px;
+    margin: 1rem;
     overflow: hidden;
-    padding-bottom:1rem;
+    padding-bottom: 1rem;
     background-color: #2b2c30;
     background-image: url('../assets/fondo.webp');
     background-size: 50px;
@@ -22,7 +31,7 @@ body{
     margin: 1.5rem 1rem 1rem 1rem;
     height: 85px;
     background-color: #d1dcce;
-    font-family: 'Courier New';
+    font-family: 'Courier New', Consolas;
     font-size: 1.5rem;
     box-sizing: border-box;
     border-radius: 5px;
@@ -72,7 +81,7 @@ body{
     font-size: 1.2rem; 
     font-weigth: bold;
     border: 1px solid #dcdcdc;      
-    box-shadow: 0px 3px 0px #b5b5b5;
+    box-shadow: 0px 4px 0px #b5b5b5;
 }
 
 .calculator_btn-num:hover{
@@ -84,7 +93,7 @@ body{
     background-color: #2e509c;
     color: white;
     border: 1px solid #1f376d;      
-    box-shadow: 0px 3px 0px #1a3366;
+    box-shadow: 0px 4px 0px #1a3366;
 }
 
 .btn-blue:hover{
@@ -99,4 +108,63 @@ body{
 .btn-blue:active {
     background-color: #152c5c;
     box-shadow: 0px 0px 0px #1a3366;
+}
+
+.calculator_history {
+    height: 345px;
+    width: 350px;
+    background-image: url('../assets/fondo.webp');
+    background-size: 50px;
+    background-origin: border-box;
+    border-radius: 24px;
+    border-left: 2px solid #1a1a1a;
+    border-right: 2px solid #1a1a1a;
+    border-top: 8px solid #ebebeb;   
+    border-bottom: 12px solid #ebebeb;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.history-container{
+    background-color: white;
+    height: 85%;
+    width: 90%;
+    margin:0;
+    border-radius: 16px;
+    font-family: 'Courier New', Consolas;
+    font-size: 1.2rem;  
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-title{
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+}
+
+.history-list{
+    overflow-y: auto;
+    flex: 1; 
+    margin: 0;
+    margin-top: 0.6rem;
+    padding: 0 1.2rem;
+}
+
+.history-list li{
+    padding: 0.2rem 0;
+}
+
+#history::-webkit-scrollbar {
+    width: 8px;
+}
+
+#history::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 10px;
 }
