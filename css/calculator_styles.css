@@ -160,8 +160,42 @@ body {
     padding: 0.2rem 0;
 }
 
+.history_clean{
+    margin-top: 5px;
+    padding-top: 5px;
+    width: 40px;
+    background-color: #2e509c;
+    border-radius: 8px;              
+    border: none;    
+    box-shadow: 0px 4px 0px #1a3366;
+    cursor: pointer; 
+    align-self: flex-end;
+}
+
+.history_clean:hover{
+    background-color: #1e3d7d;
+}
+
+.history_clean:active {
+    background-color: #152c5c;
+    box-shadow: 0px 1px 0px #1a3366;
+    transform: translateY(3px);
+}
+
+.icon-trash {
+    width: 22px;
+    height: 22px;
+    fill: white;
+    transition: fill 0.1s ease;
+}
+
+.history_clean:hover .icon-trash {
+    fill: #ebebeb; 
+}
+
 #history::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 #history::-webkit-scrollbar-thumb {

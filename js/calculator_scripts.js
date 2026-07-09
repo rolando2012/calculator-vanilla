@@ -1,12 +1,16 @@
+document.addEventListener('DOMContentLoaded',load_history);
+
 let screen = document.getElementById('screen');
 let result_screen = document.getElementById('result');
 let btns = document.querySelectorAll('.calculator_btn-num');
+let btn_clean = document.getElementById('clean');
 
 for(let btn of btns){
     btn.addEventListener('click',show);
 }
 
 window.addEventListener('keydown',show_Keyboard);
+btn_clean.addEventListener('click', clean_history);
 
 function show(e){
     e.target.blur();
@@ -31,14 +35,14 @@ function show(e){
 
         case '÷':
             if(current_text.length < 40){
-                result_screen.textContent = '';
+                result_screen.textContent = '0';
                 screen.textContent += '/';
             }
             break;
 
         default:
             if(current_text.length < 40){
-                result_screen.textContent = '';
+                result_screen.textContent = '0';
                 screen.textContent += value;
             }
     }
@@ -60,17 +64,15 @@ function show_Keyboard(e){
 
         case '*':
             if(current_text.length < 40){
-                result_screen.textContent = '';
+                result_screen.textContent = '0';
                 screen.textContent += '×';
             }
             break;
 
         default:
-            if(
-                current_text.length < 40 &&
-                /^[0-9+\-/.()]$/.test(e.key)
-            ){
-                result_screen.textContent = '';
+            if(current_text.length < 40 &&
+                /^[0-9+\-/.()]$/.test(e.key)){
+                result_screen.textContent = '0';
                 screen.textContent += e.key;
             }
     }
@@ -114,4 +116,39 @@ function show_history(operations, result){
     let text = document.createTextNode(operation_spacing + ' = ' + result);
     item.appendChild(text);
     document.getElementById('history').appendChild(item);
+    save_history(operation_spacing + ' = ' + result);
+    let history_List = document.getElementById('history');
+    history_List.scrollTop = history_List.scrollHeight;
+}
+
+function save_history(text){
+    let saved_operations;
+    let history = localStorage.getItem('operaciones');
+    if(history !== null){ 
+        saved_operations = JSON.parse(history);
+    }else{
+        saved_operations = new Array();
+    }
+    saved_operations.push(text);
+    localStorage.setItem('operaciones',JSON.stringify(saved_operations));
+}
+
+function load_history(){
+    let history = localStorage.getItem('operaciones');
+    if(history !== null){ 
+        let saved_operations = JSON.parse(history);
+        for(let operation of saved_operations){
+            let item = document.createElement('li');
+            let text = document.createTextNode(operation);
+            item.appendChild(text);
+            document.getElementById('history').appendChild(item);
+        }
+        let history_List = document.getElementById('history');
+        history_List.scrollTop = history_List.scrollHeight;
+    }
+}
+
+function clean_history(){
+    localStorage.clear();
+    document.getElementById('history').replaceChildren();
 }
